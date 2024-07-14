@@ -25,4 +25,3 @@ namespace XPInc.SPI.Entities.Enum
         Fund
     }
 }
-}
