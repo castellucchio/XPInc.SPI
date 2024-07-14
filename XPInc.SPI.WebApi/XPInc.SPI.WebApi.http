@@ -1,0 +1,6 @@
+@XPInc.SPI.WebApi_HostAddress = http://localhost:5288
+
+GET {{XPInc.SPI.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
