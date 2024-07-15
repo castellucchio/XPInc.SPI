@@ -1,10 +1,13 @@
-﻿using XPInc.SPI.Entities.Enum;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using XPInc.SPI.Entities.Enum;
 
 namespace XPInc.SPI.Entities.Models;
 
 /// <summary>
 /// Representa um ativo financeiro disponível para investimento.
 /// </summary>
+[Table("FinantialProducts")]
 public class FinantialProduct
 {
     public int Id { get; set; }

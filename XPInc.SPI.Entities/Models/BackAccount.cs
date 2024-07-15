@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace XPInc.SPI.Entities.Models
     /// </summary>
     public class BankAccount
     {
+        public int BankAccountId { get; set; }
         /// <summary>
         /// Número de agência do cliente
         /// </summary>
@@ -19,5 +21,7 @@ namespace XPInc.SPI.Entities.Models
         /// Número da conta do cliente
         /// </summary>
         public string Account { get; set; }
+
+        public Client Client { get; set; }
     }
 }

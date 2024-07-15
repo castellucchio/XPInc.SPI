@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +11,10 @@ namespace XPInc.SPI.Entities.Models
     /// <summary>
     /// Representa os investidores no sistema. Os clientes podem comprar, vender e acompanhar seus investimentos.
     /// </summary>
+    [Table("Clients")]
     public class Client
     {
-        public int Id { get; set; }
+        public int ClientId { get; set; }
         /// <summary>
         /// Nome do cliente
         /// </summary>
@@ -23,6 +26,8 @@ namespace XPInc.SPI.Entities.Models
         /// <summary>
         /// Dados bancários do cliente
         /// </summary>
-        public BankAccount Account { get; set; }
+        
+        public string Account { get; set; }
+        public string BranchNumber { get; set; }
     }
 }

@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 using XPInc.SPI.Application.Exceptions;
 using XPInc.SPI.Application.UseCases.Validations;
 using XPInc.SPI.Entities.Models;
+using XPInc.SPI.Infrastructure.Repos;
 
 namespace XPInc.SPI.Adapters.UseCases.Products
 {
     public class FinantialProductService : IFinantialProductService
     {
         private readonly IValidator<FinantialProduct> _validator;
-
-        public FinantialProductService(IValidator<FinantialProduct> validator)
+        private readonly IRepo<FinantialProduct> _repo;
+       
+        public FinantialProductService(IValidator<FinantialProduct> validator, IRepo<FinantialProduct> repo)
         {
+            _repo = repo;
             _validator = validator;
         }
 
-        public Task<int> CreateFinantialProduct(FinantialProduct product)
+        public async Task CreateFinantialProduct(FinantialProduct product)
         {
             var validationResult = _validator.Validate(product);
 
@@ -28,7 +31,7 @@ namespace XPInc.SPI.Adapters.UseCases.Products
                 throw new ValidationErrorException("Ocorreram erros de validação: ",validationResult.Errors.Select(e => e.ErrorMessage));
             }
 
-            throw new Exception();
+            await _repo.Add(product);            
         }
 
         public Task<FinantialProduct> GetFinantialProductById(int id)
@@ -41,7 +44,7 @@ namespace XPInc.SPI.Adapters.UseCases.Products
             throw new NotImplementedException();
         }
 
-        public Task<int> UpdateFinantialProduct(FinantialProduct product, int id)
+        public Task UpdateFinantialProduct(FinantialProduct product, int id)
         {
             throw new NotImplementedException();
         }

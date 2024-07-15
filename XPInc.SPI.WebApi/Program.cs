@@ -13,7 +13,7 @@ using XPInc.SPI.WebApi.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.RegisterServices();
+builder.RegisterServices(builder.Environment);
 
 var app = builder.Build();
 

@@ -25,7 +25,7 @@ namespace XPInc.SPI.Application.UseCases.Products.Handlers
         public async Task<CreateFinantialProductResponse> Handle(CreateFinantialProductRequest request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<CreateFinantialProductRequest, FinantialProduct>(request);
-            var result = await _productService.CreateFinantialProduct(product);
+            await _productService.CreateFinantialProduct(product);
 
             return _mapper.Map<CreateFinantialProductRequest, CreateFinantialProductResponse>(request);
         }

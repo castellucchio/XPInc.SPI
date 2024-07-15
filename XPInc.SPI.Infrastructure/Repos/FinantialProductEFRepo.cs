@@ -15,56 +15,63 @@ namespace XPInc.SPI.Infrastructure.Repos
 
         public FinantialProductEFRepo(SPIDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        public async Task<IEnumerable<FinantialProduct>> GetAll(int pageIndex = 1, int pageSize = 10)
+        {
+            // Implemente a lógica para buscar todos os produtos financeiros no banco de dados
+            // Você pode usar o _dbContext.FinantialProducts para acessar a tabela de produtos financeiros
+            // Lembre-se de aplicar paginação (pageIndex e pageSize) se necessário
+            return await _dbContext.FinantialProducts
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<FinantialProduct> Get(int id)
+        {
+            // Implemente a lógica para buscar um produto financeiro específico pelo ID
+            return await _dbContext.FinantialProducts.FindAsync(id);
         }
 
         public async Task Add(FinantialProduct item)
         {
+            // Implemente a lógica para adicionar um novo produto financeiro ao banco de dados
             await _dbContext.FinantialProducts.AddAsync(item);
-        }
-
-        public async Task Delete(int id)
-        {
-            var product = _dbContext.FinantialProducts.Where(fp => fp.Id == id).FirstOrDefault();
-            _dbContext.FinantialProducts.Remove(product);
-
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task Edit(int id, FinantialProduct item)
         {
-            var product = await _dbContext.FinantialProducts.Where(p => p.Id == id).FirstAsync();
+            // Implemente a lógica para atualizar um produto financeiro existente no banco de dados
+            var existingProduct = await _dbContext.FinantialProducts.FindAsync(id);
+            if (existingProduct == null)
+            {
+                throw new ArgumentException($"Produto financeiro com ID {id} não encontrado.");
+            }
 
-            product.Name = item.Name;
-            product.Description = item.Description;
-            product.Type = item.Type;
-            product.ExpireDate = item.ExpireDate;
-            product.Price = item.Price;
-            
-            _dbContext.Update(product);
+            // Atualize as propriedades do produto existente com os valores de 'item'
+            existingProduct.Name = item.Name;
+            existingProduct.Description = item.Description;
+            existingProduct.Type = item.Type;
+            existingProduct.Price = item.Price;
+            existingProduct.ExpireDate = item.ExpireDate;
+
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<FinantialProduct> Get(int id)
+        public async Task Delete(int id)
         {
-            var product = await _dbContext.FinantialProducts
-                .AsNoTracking()
-                .OrderBy(x => x.Id)
-                .Where(p => p.Id == id)
-                .FirstAsync();
+            // Implemente a lógica para excluir um produto financeiro pelo ID
+            var productToDelete = await _dbContext.FinantialProducts.FindAsync(id);
+            if (productToDelete == null)
+            {
+                throw new ArgumentException($"Produto financeiro com ID {id} não encontrado.");
+            }
 
-            return product;
-        }
-
-        public async Task<IEnumerable<FinantialProduct>> GetAll(int pageIndex = 1, int pageSize = 10)
-        {
-            var products = await _dbContext.FinantialProducts.AsNoTracking()
-                .OrderBy(x => x.Id)
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return products;
+            _dbContext.FinantialProducts.Remove(productToDelete);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

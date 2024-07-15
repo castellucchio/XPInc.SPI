@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\XPInc.SPI.Adapters\XPInc.SPI.Adapters.csproj" />
     <ProjectReference Include="..\XPInc.SPI.Entities\XPInc.SPI.Entities.csproj" />
+    <ProjectReference Include="..\XPInc.SPI.Infrastructure\XPInc.SPI.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

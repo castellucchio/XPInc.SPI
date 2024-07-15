@@ -11,14 +11,41 @@ using XPInc.SPI.Infrastructure.DbContexts;
 namespace XPInc.SPI.Infrastructure.Migrations
 {
     [DbContext(typeof(SPIDbContext))]
-    [Migration("20240715014936_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240715162954_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
+
+            modelBuilder.Entity("XPInc.SPI.Entities.Models.Client", b =>
+                {
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Account")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BranchNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Document")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ClientId");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("XPInc.SPI.Entities.Models.FinantialProduct", b =>
                 {

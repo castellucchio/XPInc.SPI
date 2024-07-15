@@ -9,8 +9,8 @@ namespace XPInc.SPI.Adapters.UseCases.Products
 {
     public interface IFinantialProductService
     {
-        Task<int> CreateFinantialProduct(FinantialProduct product);
-        Task<int> UpdateFinantialProduct(FinantialProduct product, int id);
+        Task CreateFinantialProduct(FinantialProduct product);
+        Task UpdateFinantialProduct(FinantialProduct product, int id);
         Task<List<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10);
         Task<FinantialProduct> GetFinantialProductById(int id);
     }

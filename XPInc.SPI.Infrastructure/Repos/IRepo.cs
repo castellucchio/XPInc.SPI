@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XPInc.SPI.Infrastructure.Repos
 {
-    internal interface IRepo<T>
+    public interface IRepo<T>
     {
         Task<IEnumerable<T>> GetAll(int pageIndex = 1, int pageSize = 10);
         Task<T> Get(int id);
