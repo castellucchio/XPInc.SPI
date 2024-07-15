@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using XPInc.SPI.Adapters.UseCases.Products;
 using XPInc.SPI.Application.Mappings;
 using XPInc.SPI.Application.UseCases.Products.Handlers;
 using XPInc.SPI.Application.UseCases.Validations;
 using XPInc.SPI.Entities.Models;
+using XPInc.SPI.Infrastructure.DbContexts;
 
 namespace XPInc.SPI.WebApi.Extensions
 {
@@ -25,9 +27,10 @@ namespace XPInc.SPI.WebApi.Extensions
             {
                 config.AddProfile<FinantialProductMappings>();
             });
+
             // Registrar serviços de infraestrutura (banco de dados)
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer("sua string de conexão"));
+            builder.Services.AddDbContext<SPIDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("FinanceiroDb")));
 
             // Registrar os manipuladores de solicitação
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateFinantialProductRequestHandler).Assembly));
