@@ -14,6 +14,7 @@ namespace XPInc.SPI.Entities.Models
     [Table("Clients")]
     public class Client
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientId { get; set; }
         /// <summary>
         /// Nome do cliente
@@ -29,5 +30,6 @@ namespace XPInc.SPI.Entities.Models
         
         public string Account { get; set; }
         public string BranchNumber { get; set; }
+        public List<Transaction> Transactions { get; set; }
     }
 }

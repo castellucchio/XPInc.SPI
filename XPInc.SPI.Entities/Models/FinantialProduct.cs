@@ -10,6 +10,7 @@ namespace XPInc.SPI.Entities.Models;
 [Table("FinantialProducts")]
 public class FinantialProduct
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     /// <summary>
     /// O nome do produto (por exemplo, “Ação da Empresa X” ou “Título ABC”). 

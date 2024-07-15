@@ -13,37 +13,65 @@ namespace XPInc.SPI.Infrastructure.Migrations.Seeds
     /// <summary>
     /// Example uses Faker[T]
     /// </summary>
-    public static class FinantialProductFakeData
+    public static class SPIDbSeeder
     {
         public static List<FinantialProduct> FinantialProducts = new List<FinantialProduct>();
         public static List<Client> Clients = new List<Client>();
-        public static void Init(int count)
+        public static void Init()
         {
-            int currentProductId = 1; // Initialize a static counter
-            int currentClientId = 1; // Initialize a static counter
+            FinantialProducts.AddRange(
+                new List<FinantialProduct>()
+                {
+                    new FinantialProduct
+                    {
+                        Id = 1,
+                        Name = "Produto financeiro A",
+                        Description = "Descrição do Produto A",
+                        Type = FinantialProductType.Stock,
+                        Price = 100.0m,
+                        ExpireDate = DateTime.Now.AddMonths(1)
+                    },
+                    new FinantialProduct
+                    {
+                        Id = 2,
+                        Name = "Produto financeiro B",
+                        Description = "Descrição do Produto B",
+                        Type = FinantialProductType.Bond,
+                        Price = 250.0m,
+                        ExpireDate = DateTime.Now.AddMonths(2)
+                    },
+                    new FinantialProduct
+                    {
+                        Id = 3,
+                        Name = "Produto financeiro C",
+                        Description = "Descrição do Produto C",
+                        Type = FinantialProductType.Fund,
+                        Price = 450.0m,
+                        ExpireDate = DateTime.Now.AddMonths(3)
+                    }
+                }
+            );
 
-            var productsFaker = new Faker<FinantialProduct>()
-              .StrictMode(true)
-              .RuleFor(p => p.Id, currentProductId++) // Unique ID using Guid
-              .RuleFor(p => p.Name, f => $"Ação da Empresa")
-              .RuleFor(p => p.ExpireDate, f => f.Date.Soon())
-              .RuleFor(p => p.Description, f => $"Descrição da Empresa")
-              .RuleFor(p => p.Price, f => f.Finance.Amount())
-              .RuleFor(u => u.Type, f => f.PickRandom<FinantialProductType>());
-
-            var clientsFaker = new Faker<Client>()
-              .StrictMode(true)
-              .RuleFor(c => c.ClientId, currentClientId++) // Unique ID using Guid
-              .RuleFor(p => p.Name, f => f.Name.FullName())
-              .RuleFor(p => p.Account, new Bogus.Randomizer().Replace("####-####"))
-              .RuleFor(p => p.BranchNumber, "0001")
-              .RuleFor(p => p.Document, f => new Bogus.Randomizer().Replace("###-##-####"));
-
-            var products = productsFaker.Generate(count);
-            var clients = clientsFaker.Generate(count);
-
-            FinantialProductFakeData.FinantialProducts.AddRange(products);            
-            FinantialProductFakeData.Clients.AddRange(clients);
+            Clients.AddRange(
+            new List<Client>()
+            {
+                new Client
+                {
+                    ClientId = 1,
+                    Name = "Jhon Doe",
+                    Document = "123.456.789-00",
+                    Account = "12345-6",
+                    BranchNumber = "7890"
+                },
+                new Client
+                {
+                    ClientId = 2,
+                    Name = "Jane Smith",
+                    Document = "987.654.321-00",
+                    Account = "98765-4",
+                    BranchNumber = "4321"
+                }
+            });
         }
     }
 }

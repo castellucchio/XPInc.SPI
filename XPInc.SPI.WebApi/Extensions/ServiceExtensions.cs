@@ -33,15 +33,12 @@ namespace XPInc.SPI.WebApi.Extensions
                 config.AddProfile<FinantialProductMappings>();
             });
 
-            // Registrar serviços de infraestrutura (banco de dados)
-
-            var infrastructureAssembly = Assembly.GetAssembly(typeof(XPInc.SPI.Infrastructure.Class1));
-            var infrastructurePath = Path.GetDirectoryName(infrastructureAssembly.Location);
+            // Registrar serviços de infraestrutura (banco de dados)            
             builder.Services.AddDbContext<SPIDbContext>(options =>
-                options.UseSqlite($"Data Source={infrastructurePath}/spi.db"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SPI")));
+
             // Registrar os manipuladores de solicitação
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateFinantialProductRequestHandler).Assembly));
-
         }
     }
 }
