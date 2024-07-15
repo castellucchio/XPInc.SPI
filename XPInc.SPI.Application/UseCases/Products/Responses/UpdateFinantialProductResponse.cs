@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XPInc.SPI.Application.UseCases.Products.Responses
 {
-    internal class UpdateFinantialProductResponse
+    public class UpdateFinantialProductResponse
     {
     }
 }
