@@ -73,7 +73,8 @@ namespace XPInc.SPI.Infrastructure.DbContexts
                     Name = "Jhon Doe",
                     Document = "123.456.789-00",
                     Account = "12345-6",
-                    BranchNumber = "7890"
+                    BranchNumber = "7890",
+                    TotalBalance = 5000000m
                 },
                 new Client
                 {
@@ -81,7 +82,8 @@ namespace XPInc.SPI.Infrastructure.DbContexts
                     Name = "Jane Smith",
                     Document = "987.654.321-00",
                     Account = "98765-4",
-                    BranchNumber = "4321"
+                    BranchNumber = "4321",
+                    TotalBalance = 1000000m
                 }
             );
             base.OnModelCreating(modelBuilder);

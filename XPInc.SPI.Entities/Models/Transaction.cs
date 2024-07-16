@@ -28,11 +28,11 @@ namespace XPInc.SPI.Entities.Models
         /// Referencia o cliente que realizou a transação
         /// </summary>
         public Client Client { get; set; }
+
         /// <summary>
-        /// Valor da transação (positivo para compra, negativo para venda)
+        /// A quantidade a ser vendida ou adquirida
         /// </summary>
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Amount { get; set; } // 
+        public int Quantity { get; set; }
         /// <summary>
         /// Tipo de transação: Compra ou Venda
         /// </summary>

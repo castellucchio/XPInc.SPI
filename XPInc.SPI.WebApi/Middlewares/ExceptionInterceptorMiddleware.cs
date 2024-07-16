@@ -21,12 +21,22 @@ namespace XPInc.SPI.WebApi.Middlewares
             }
             catch (ValidationErrorException ex)
             {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await context.Response.WriteAsJsonAsync(new { Errors = ex.Errors?.Select(e => new { Erro = e }) ?? new[] { new { Erro = ex.Message } } });
+            }
+            catch(InsuficientCashException ex)
+            {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsJsonAsync(new { Errors = ex.Errors.Select(e => new { Erro = e }) });
+                await context.Response.WriteAsJsonAsync(new { Error = ex.Message });
             }
             catch (NotFoundException ex)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            }
+            catch (InsuficientProductsException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await context.Response.WriteAsJsonAsync(new { Error = ex.Message });
             }
             catch (Exception ex)
             {

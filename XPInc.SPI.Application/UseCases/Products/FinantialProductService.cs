@@ -46,11 +46,6 @@ namespace XPInc.SPI.Adapters.UseCases.Products
             return product;
         }
 
-        public Task<int> GetFinantialProductCount()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10)
         {
             var products = await _repo.GetAll(pageIndex, pageSize);

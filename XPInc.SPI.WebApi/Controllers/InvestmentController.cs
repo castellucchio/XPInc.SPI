@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using XPInc.SPI.Application.UseCases.Investments.Requests;
 
 namespace XPInc.SPI.WebApi.Controllers
 {
@@ -8,46 +9,27 @@ namespace XPInc.SPI.WebApi.Controllers
     [Route("[controller]")]
     public class InvestmentController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<InvestmentController> _logger;
         private readonly IMediator _mediator;
 
-        public InvestmentController(ILogger logger, IMediator mediator)
+        public InvestmentController(ILogger<InvestmentController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
         }
 
         [HttpPost("buy")]
-        public async Task<IActionResult> Buy([FromBody] BuyRequest request)
+        public async Task<IActionResult> Buy([FromBody] BuyFinantialProductRequest request)
         {
-            //// Validar requisição
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            //// Consultar produto financeiro
-            //var product = await _financialProductService.GetByIdAsync(request.ProductId);
-            //if (product == null)
-            //{
-            //    return NotFound("Produto financeiro não encontrado");
-            //}
-
-            //// Validar saldo do cliente
-            //if (request.Quantity * product.CurrentPrice > GetCustomerBalance())
-            //{
-            //    return BadRequest("Saldo insuficiente");
-            //}
-
-            //// Realizar compra
-            //var transaction = await _transactionService.BuyAsync(request.ProductId, request.Quantity, product.CurrentPrice);
-
-            //// Atualizar saldo do cliente
-            //UpdateCustomerBalance(transaction.TotalAmount);
-
-            // Retornar resultado
-            return Ok();
+            var response = await _mediator.Send(request);
+            return Ok(response);
         }
 
+        [HttpPost("sell")]
+        public async Task<IActionResult> Sell([FromBody] SellFinantialProductRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return Ok(response);
+        }
     }
 }

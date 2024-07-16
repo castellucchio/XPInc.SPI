@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XPInc.SPI.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using XPInc.SPI.Infrastructure.DbContexts;
 namespace XPInc.SPI.Infrastructure.Migrations
 {
     [DbContext(typeof(SPIDbContext))]
-    partial class SPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716115438_AddedTransactionQuantity")]
+    partial class AddedTransactionQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                             BranchNumber = "7890",
                             Document = "123.456.789-00",
                             Name = "Jhon Doe",
-                            TotalBalance = 5000000m
+                            TotalBalance = 0m
                         },
                         new
                         {
@@ -70,7 +73,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                             BranchNumber = "4321",
                             Document = "987.654.321-00",
                             Name = "Jane Smith",
-                            TotalBalance = 1000000m
+                            TotalBalance = 0m
                         });
                 });
 
@@ -108,7 +111,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 1,
                             Description = "Descrição do Produto A",
-                            ExpireDate = new DateTime(2024, 8, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6657),
+                            ExpireDate = new DateTime(2024, 8, 16, 8, 54, 38, 588, DateTimeKind.Local).AddTicks(9772),
                             Name = "Produto financeiro A",
                             Price = 100.0m,
                             Type = 1
@@ -117,7 +120,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 2,
                             Description = "Descrição do Produto B",
-                            ExpireDate = new DateTime(2024, 9, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6675),
+                            ExpireDate = new DateTime(2024, 9, 16, 8, 54, 38, 588, DateTimeKind.Local).AddTicks(9789),
                             Name = "Produto financeiro B",
                             Price = 250.0m,
                             Type = 2
@@ -126,7 +129,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 3,
                             Description = "Descrição do Produto C",
-                            ExpireDate = new DateTime(2024, 10, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6677),
+                            ExpireDate = new DateTime(2024, 10, 16, 8, 54, 38, 588, DateTimeKind.Local).AddTicks(9790),
                             Name = "Produto financeiro C",
                             Price = 450.0m,
                             Type = 3
@@ -140,6 +143,9 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");

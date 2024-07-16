@@ -11,6 +11,10 @@ namespace XPInc.SPI.Application.Exceptions
         public string Message { get; set; }
         public IEnumerable<string> Errors { get; set; }
 
+        public ValidationErrorException(string message) : base(message) 
+        {
+            Message = message;
+        }
         public ValidationErrorException(string message, IEnumerable<string> errors) : base(message)
         {
             Message = message;
