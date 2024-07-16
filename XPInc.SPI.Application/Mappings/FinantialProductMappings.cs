@@ -14,13 +14,13 @@ namespace XPInc.SPI.Application.Mappings
     {
         public FinantialProductMappings()
         {
-            //var product = _mapper.Map<CreateFinantialProductRequest, FinantialProduct>(request);
-            //var result = await _productService.CreateFinantialProduct(product);
-
-            //return _mapper.Map<CreateFinantialProductRequest, CreateFinantialProductResponse>(request);
             CreateMap<CreateFinantialProductRequest, FinantialProduct>();
             CreateMap<CreateFinantialProductRequest, CreateFinantialProductResponse>();
-            // Use CreateMap... Etc.. here (Profile methods are the same as configuration methods)
+            CreateMap<UpdateFinantialProductRequest, FinantialProduct>();
+            CreateMap<UpdateFinantialProductRequest, UpdateFinantialProductResponse>();
+            CreateMap<FinantialProduct, GetFinantialProductByIdResponse>();
+            CreateMap<FinantialProduct, GetAllFinantialProductResponse>()
+            .ForMember(dest => dest.products, opt => opt.MapFrom(src => src));
         }
     }
 }

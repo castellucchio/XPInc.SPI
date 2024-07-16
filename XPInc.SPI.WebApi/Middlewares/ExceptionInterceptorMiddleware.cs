@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Net;
 using XPInc.SPI.Application.Exceptions;
 
 namespace XPInc.SPI.WebApi.Middlewares
@@ -22,6 +23,10 @@ namespace XPInc.SPI.WebApi.Middlewares
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsJsonAsync(new { Errors = ex.Errors.Select(e => new { Erro = e }) });
+            }
+            catch (NotFoundException ex)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
             catch (Exception ex)
             {

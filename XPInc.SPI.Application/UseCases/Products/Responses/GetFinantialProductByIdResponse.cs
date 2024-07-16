@@ -1,5 +1,4 @@
-﻿using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +7,9 @@ using XPInc.SPI.Entities.Enum;
 
 namespace XPInc.SPI.Application.UseCases.Products.Responses
 {
-    public class CreateFinantialProductRequest : IRequest<CreateFinantialProductResponse>
+    public class GetFinantialProductByIdResponse
     {
+        public int Id { get; set; }
         /// <summary>
         /// O nome do produto (por exemplo, “Ação da Empresa X” ou “Título ABC”). 
         /// </summary>

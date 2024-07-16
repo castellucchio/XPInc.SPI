@@ -20,9 +20,8 @@ namespace XPInc.SPI.Infrastructure.Repos
 
         public async Task<IEnumerable<FinantialProduct>> GetAll(int pageIndex = 1, int pageSize = 10)
         {
-            // Implemente a lógica para buscar todos os produtos financeiros no banco de dados
-            // Você pode usar o _dbContext.FinantialProducts para acessar a tabela de produtos financeiros
-            // Lembre-se de aplicar paginação (pageIndex e pageSize) se necessário
+            pageIndex = pageIndex == 0 ? 1 : pageIndex;
+            pageSize = pageSize == 0 ? 10 : pageSize;
             return await _dbContext.FinantialProducts
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
@@ -73,5 +72,6 @@ namespace XPInc.SPI.Infrastructure.Repos
             _dbContext.FinantialProducts.Remove(productToDelete);
             await _dbContext.SaveChangesAsync();
         }
+
     }
 }

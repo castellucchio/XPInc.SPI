@@ -11,15 +11,14 @@ namespace XPInc.SPI.Infrastructure.DbContexts
         public DbSet<Client> Clients { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
-        //public SPIDbContext(DbContextOptions<SPIDbContext> options) : base(options)
-        //{
+        public SPIDbContext(DbContextOptions<SPIDbContext> options) : base(options)
+        {
 
-        //}
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseSqlServer("Server=localhost\\MSSQLSERVER02;Database=SPI;Trusted_Connection=True;TrustServerCertificate=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

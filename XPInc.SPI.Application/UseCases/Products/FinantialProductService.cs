@@ -34,19 +34,40 @@ namespace XPInc.SPI.Adapters.UseCases.Products
             await _repo.Add(product);            
         }
 
-        public Task<FinantialProduct> GetFinantialProductById(int id)
+        public async Task<FinantialProduct> GetFinantialProductById(int id)
+        {
+            var product = await _repo.Get(id);
+
+            if(product is null)
+            {
+                throw new NotFoundException("Produto não existe na base de dados");
+            }
+
+            return product;
+        }
+
+        public Task<int> GetFinantialProductCount()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10)
+        public async Task<IEnumerable<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10)
         {
-            throw new NotImplementedException();
+            var products = await _repo.GetAll(pageIndex, pageSize);
+
+            return products;
         }
 
-        public Task UpdateFinantialProduct(FinantialProduct product, int id)
+        public async Task UpdateFinantialProduct(FinantialProduct product, int id)
         {
-            throw new NotImplementedException();
+            var validationResult = _validator.Validate(product);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationErrorException("Ocorreram erros de validação: ", validationResult.Errors.Select(e => e.ErrorMessage));
+            }
+
+            await _repo.Edit(id,product);
         }
     }
 }

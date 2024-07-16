@@ -11,7 +11,8 @@ namespace XPInc.SPI.Adapters.UseCases.Products
     {
         Task CreateFinantialProduct(FinantialProduct product);
         Task UpdateFinantialProduct(FinantialProduct product, int id);
-        Task<List<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10);
+        Task<IEnumerable<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10);
         Task<FinantialProduct> GetFinantialProductById(int id);
+        Task<int> GetFinantialProductCount();
     }
 }

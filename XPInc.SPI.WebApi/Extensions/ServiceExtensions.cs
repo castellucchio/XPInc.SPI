@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
 using XPInc.SPI.Adapters.UseCases.Products;
 using XPInc.SPI.Application.Mappings;
@@ -19,7 +20,24 @@ namespace XPInc.SPI.WebApi.Extensions
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "SPI(Sistema de portfólio de Investimentos) API",
+                    Description = "WebApi para gestão de portfólio de investimentos",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Diego Amaro Castellucchio",
+                        Url = new Uri("https://www.linkedin.com/in/diego-castellucchio/")
+                    }
+                });
+
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             // Registrar interfaces e implementações
             builder.Services.AddScoped<IValidator<FinantialProduct>, FinantialProductValidator>();
