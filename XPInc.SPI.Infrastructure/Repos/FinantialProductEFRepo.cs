@@ -53,6 +53,8 @@ namespace XPInc.SPI.Infrastructure.Repos
 
         public async Task Edit(int id, FinantialProduct item)
         {
+            var cacheKey = $"FinantialProducts_{id}";
+
             var existingProduct = await _dbContext.FinantialProducts.FindAsync(id);
             if (existingProduct == null)
             {
@@ -66,10 +68,13 @@ namespace XPInc.SPI.Infrastructure.Repos
             existingProduct.ExpireDate = item.ExpireDate;
 
             await _dbContext.SaveChangesAsync();
+            _memoryCache.Remove(cacheKey);
         }
 
         public async Task Delete(int id)
         {
+            var cacheKey = $"FinantialProducts_{id}";
+
             var productToDelete = await _dbContext.FinantialProducts.FindAsync(id);
             if (productToDelete == null)
             {
@@ -78,7 +83,7 @@ namespace XPInc.SPI.Infrastructure.Repos
 
             _dbContext.FinantialProducts.Remove(productToDelete);
             await _dbContext.SaveChangesAsync();
+            _memoryCache.Remove(cacheKey);
         }
-
     }
 }
