@@ -31,6 +31,7 @@ namespace XPInc.SPI.Entities.Models
         /// <summary>
         /// Valor da transação (positivo para compra, negativo para venda)
         /// </summary>
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; } // 
         /// <summary>
         /// Tipo de transação: Compra ou Venda
