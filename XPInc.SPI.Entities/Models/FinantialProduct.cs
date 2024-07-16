@@ -28,6 +28,7 @@ public class FinantialProduct
     /// <summary>
     /// O valor atual do produto no mercado. 
     /// </summary>
+    [Column(TypeName = "decimal(18,2)")]
     public decimal Price { get; set; }
 
     /// <summary>

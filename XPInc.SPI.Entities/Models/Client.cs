@@ -30,6 +30,12 @@ namespace XPInc.SPI.Entities.Models
         
         public string Account { get; set; }
         public string BranchNumber { get; set; }
+
+        /// <summary>
+        /// Saldo total do cliente considerando todas as suas transações
+        /// </summary>
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal TotalBalance { get; set; }
         public List<Transaction> Transactions { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace XPInc.SPI.Application.UseCases.Products.Handlers
             var response = new GetAllFinantialProductResponse
             {
                 products = _mapper.Map<IEnumerable<FinantialProduct>>(products),
-                CurrentPage = ++request.PageIndex,
+                CurrentPage = request.PageIndex,
                 TotalProducts = products.Count()
             };
             return response;

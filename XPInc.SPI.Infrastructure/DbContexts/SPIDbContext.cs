@@ -18,19 +18,23 @@ namespace XPInc.SPI.Infrastructure.DbContexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.UseSqlServer("Server=localhost\\MSSQLSERVER02;Database=SPI;Trusted_Connection=True;TrustServerCertificate=True;");
             optionsBuilder.EnableSensitiveDataLogging();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FinantialProduct>().HasKey(p => p.Id);
             modelBuilder.Entity<Client>().HasKey(c => c.ClientId);
+            modelBuilder.Entity<FinantialProduct>().HasIndex(t => new { t.Id });
+            modelBuilder.Entity<Transaction>().HasIndex(t => new { t.ClientId, t.TransactionDate, t.Type });
             // Configuração da relação muitos-para-muitos entre Client e FinantialProduct (ações)
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Client)
                 .WithMany(c => c.Transactions) // Propriedade de navegação em Client para as transações
                 .HasForeignKey(t => t.ClientId);
 
-            modelBuilder.Entity<Transaction>()
+
+            modelBuilder.Entity<Transaction>()                
                 .HasOne(t => t.FinancialProduct)
                 .WithMany() // Não precisamos de uma propriedade de navegação em FinancialProduct
                 .HasForeignKey(t => t.FinantialProductId);
@@ -73,7 +77,8 @@ namespace XPInc.SPI.Infrastructure.DbContexts
                     Name = "Jhon Doe",
                     Document = "123.456.789-00",
                     Account = "12345-6",
-                    BranchNumber = "7890"
+                    BranchNumber = "7890",
+                    TotalBalance = 5000000m
                 },
                 new Client
                 {
@@ -81,7 +86,8 @@ namespace XPInc.SPI.Infrastructure.DbContexts
                     Name = "Jane Smith",
                     Document = "987.654.321-00",
                     Account = "98765-4",
-                    BranchNumber = "4321"
+                    BranchNumber = "4321",
+                    TotalBalance = 1000000m
                 }
             );
             base.OnModelCreating(modelBuilder);

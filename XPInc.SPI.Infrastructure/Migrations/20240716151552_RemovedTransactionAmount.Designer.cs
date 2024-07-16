@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XPInc.SPI.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using XPInc.SPI.Infrastructure.DbContexts;
 namespace XPInc.SPI.Infrastructure.Migrations
 {
     [DbContext(typeof(SPIDbContext))]
-    partial class SPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716151552_RemovedTransactionAmount")]
+    partial class RemovedTransactionAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,8 +104,6 @@ namespace XPInc.SPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
                     b.ToTable("FinantialProducts");
 
                     b.HasData(
@@ -110,7 +111,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 1,
                             Description = "Descrição do Produto A",
-                            ExpireDate = new DateTime(2024, 8, 16, 14, 8, 55, 378, DateTimeKind.Local).AddTicks(423),
+                            ExpireDate = new DateTime(2024, 8, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6657),
                             Name = "Produto financeiro A",
                             Price = 100.0m,
                             Type = 1
@@ -119,7 +120,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 2,
                             Description = "Descrição do Produto B",
-                            ExpireDate = new DateTime(2024, 9, 16, 14, 8, 55, 378, DateTimeKind.Local).AddTicks(443),
+                            ExpireDate = new DateTime(2024, 9, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6675),
                             Name = "Produto financeiro B",
                             Price = 250.0m,
                             Type = 2
@@ -128,7 +129,7 @@ namespace XPInc.SPI.Infrastructure.Migrations
                         {
                             Id = 3,
                             Description = "Descrição do Produto C",
-                            ExpireDate = new DateTime(2024, 10, 16, 14, 8, 55, 378, DateTimeKind.Local).AddTicks(445),
+                            ExpireDate = new DateTime(2024, 10, 16, 12, 15, 51, 697, DateTimeKind.Local).AddTicks(6677),
                             Name = "Produto financeiro C",
                             Price = 450.0m,
                             Type = 3
@@ -164,9 +165,9 @@ namespace XPInc.SPI.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FinantialProductId");
+                    b.HasIndex("ClientId");
 
-                    b.HasIndex("ClientId", "TransactionDate", "Type");
+                    b.HasIndex("FinantialProductId");
 
                     b.ToTable("Transactions");
                 });

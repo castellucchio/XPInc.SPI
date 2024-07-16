@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using XPInc.SPI.Adapters.UseCases.Products;
 using XPInc.SPI.Application.Mappings;
+using XPInc.SPI.Application.UseCases.Investments;
 using XPInc.SPI.Application.UseCases.Products.Handlers;
 using XPInc.SPI.Application.UseCases.Validations;
 using XPInc.SPI.Entities.Models;
@@ -42,14 +43,22 @@ namespace XPInc.SPI.WebApi.Extensions
 
             // Registrar interfaces e implementações
             builder.Services.AddScoped<IValidator<FinantialProduct>, FinantialProductValidator>();
-
+            builder.Services.AddScoped<IBankStatementService, BankStatementService>();
             builder.Services.AddScoped<IFinantialProductService, FinantialProductService>();
+            builder.Services.AddScoped<IInvestmentService, InvestmentService>();
             builder.Services.AddScoped<IRepo<FinantialProduct>, FinantialProductEFRepo>();
+            builder.Services.AddScoped<IRepo<Client>,ClientEFRepo>();
+            builder.Services.AddScoped<IClientRepo,ClientEFRepo>();
+            builder.Services.AddScoped<IBankStatementRepo,TransactionEFRepo>();
+            builder.Services.AddScoped<IRepo<Transaction>,TransactionEFRepo>();
 
 
             builder.Services.AddAutoMapper(config =>
             {
                 config.AddProfile<FinantialProductMappings>();
+                config.AddProfile<BuyTransactionMappings>();
+                config.AddProfile<SellTransactionMappings>();
+                config.AddProfile<BankStatementMappings>();
             });
 
             // Registrar serviços de infraestrutura (banco de dados)            
@@ -58,6 +67,8 @@ namespace XPInc.SPI.WebApi.Extensions
 
             // Registrar os manipuladores de solicitação
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateFinantialProductRequestHandler).Assembly));
+
+            builder.Services.AddScoped<UnitOfWork>();
         }
     }
 }
