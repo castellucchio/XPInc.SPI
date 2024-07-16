@@ -1,5 +1,14 @@
-﻿using Hangfire;
+﻿using FluentValidation;
+using Hangfire;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using XPInc.SPI.Adapters.UseCases.Products;
+using XPInc.SPI.Application.Email;
+using XPInc.SPI.Application.UseCases.Validations;
+using XPInc.SPI.Entities.Models;
+using XPInc.SPI.Infrastructure.DbContexts;
+using XPInc.SPI.Infrastructure.Repos;
 using XPInc.SPI.Workers.Workers;
 
 namespace XPInc.SPI.Workers.Extensions
@@ -17,8 +26,18 @@ namespace XPInc.SPI.Workers.Extensions
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(builder.Configuration.GetConnectionString("SPI")));
+            .UseSqlServerStorage(builder.Configuration.GetConnectionString("SPI")));
 
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.AddScoped<IValidator<FinantialProduct>, FinantialProductValidator>();
+            builder.Services.AddScoped<IFinantialProductService, FinantialProductService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IFinantialProductRepo, FinantialProductEFRepo>();
+            builder.Services.AddScoped<IRepo<FinantialProduct>, FinantialProductEFRepo>();
+
+            // Registrar serviços de infraestrutura (banco de dados)            
+            builder.Services.AddDbContext<SPIDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SPI")));
             builder.Services.AddHangfireServer();
         }
 

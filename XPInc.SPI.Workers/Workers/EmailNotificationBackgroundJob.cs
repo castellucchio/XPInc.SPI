@@ -1,10 +1,19 @@
-﻿namespace XPInc.SPI.Workers.Workers
+﻿using XPInc.SPI.Application.Email;
+
+namespace XPInc.SPI.Workers.Workers
 {
     public class EmailNotificationBackgroundJob
     {
-        public void Execute()
-        {
+        private readonly IEmailService _emailService;
 
+        public EmailNotificationBackgroundJob(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
+        public async Task Execute()
+        {
+            await _emailService.SendEmailAsync();
         }
     }
 }

@@ -15,9 +15,9 @@ namespace XPInc.SPI.Adapters.UseCases.Products
     public class FinantialProductService : IFinantialProductService
     {
         private readonly IValidator<FinantialProduct> _validator;
-        private readonly IRepo<FinantialProduct> _repo;
+        private readonly IFinantialProductRepo _repo;
        
-        public FinantialProductService(IValidator<FinantialProduct> validator, IRepo<FinantialProduct> repo)
+        public FinantialProductService(IValidator<FinantialProduct> validator, IFinantialProductRepo repo)
         {
             _repo = repo;
             _validator = validator;
@@ -33,6 +33,11 @@ namespace XPInc.SPI.Adapters.UseCases.Products
             }
 
             await _repo.Add(product);            
+        }
+
+        public async Task<IEnumerable<FinantialProduct>> GetExpiringProducts()
+        {
+            return await _repo.GetExpiringProducts();
         }
 
         public async Task<FinantialProduct> GetFinantialProductById(int id)

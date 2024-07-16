@@ -49,6 +49,7 @@ namespace XPInc.SPI.WebApi.Extensions
             builder.Services.AddScoped<IRepo<FinantialProduct>, FinantialProductEFRepo>();
             builder.Services.AddScoped<IRepo<Client>,ClientEFRepo>();
             builder.Services.AddScoped<IClientRepo,ClientEFRepo>();
+            builder.Services.AddScoped<IFinantialProductRepo,FinantialProductEFRepo>();
             builder.Services.AddScoped<IBankStatementRepo,TransactionEFRepo>();
             builder.Services.AddScoped<IRepo<Transaction>,TransactionEFRepo>();
 

@@ -5,15 +5,13 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.Entities", "XPInc.SPI.Entities\XPInc.SPI.Entities.csproj", "{3187EFC9-F575-4E18-A1E4-0B0D534F5F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPInc.SPI.Application", "XPInc.SPI.Application\XPInc.SPI.Application.csproj", "{E8344A83-1AF9-4980-8606-6835B5ED4620}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.Adapters", "XPInc.SPI.Adapters\XPInc.SPI.Adapters.csproj", "{95609594-C435-4D99-944A-55AC19D6290E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.Application", "XPInc.SPI.Application\XPInc.SPI.Application.csproj", "{E8344A83-1AF9-4980-8606-6835B5ED4620}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.Infrastructure", "XPInc.SPI.Infrastructure\XPInc.SPI.Infrastructure.csproj", "{1EB216EE-4655-42AC-A84B-47AB0AA4D154}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.WebApi", "XPInc.SPI.WebApi\XPInc.SPI.WebApi.csproj", "{FA60576D-319B-4050-91FE-32FB900F61B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPInc.SPI.Workers", "XPInc.SPI.Workers\XPInc.SPI.Workers.csproj", "{85C0BF65-44FB-4DFA-98C8-3CF889A69801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPInc.SPI.Workers", "XPInc.SPI.Workers\XPInc.SPI.Workers.csproj", "{85C0BF65-44FB-4DFA-98C8-3CF889A69801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,8 +45,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A10CF75F-7B5D-4B01-B7C9-3BED07F9F0E8}
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

@@ -10,7 +10,7 @@ using XPInc.SPI.Infrastructure.DbContexts;
 
 namespace XPInc.SPI.Infrastructure.Repos
 {
-    public class FinantialProductEFRepo : IRepo<FinantialProduct>
+    public class FinantialProductEFRepo : IFinantialProductRepo
     {
         private readonly SPIDbContext _dbContext;
         private readonly IMemoryCache _memoryCache;
@@ -84,6 +84,17 @@ namespace XPInc.SPI.Infrastructure.Repos
             _dbContext.FinantialProducts.Remove(productToDelete);
             await _dbContext.SaveChangesAsync();
             _memoryCache.Remove(cacheKey);
+        }
+
+        public async Task<IEnumerable<FinantialProduct>> GetExpiringProducts()
+        {
+            DateTime currentDate = DateTime.Now;           
+            var oneWeekFromNow = currentDate.AddDays(7);
+
+            return await _dbContext.FinantialProducts
+                .Where(p => p.ExpireDate <= oneWeekFromNow)
+                .OrderBy(p => p.ExpireDate)
+                .ToListAsync();
         }
     }
 }
