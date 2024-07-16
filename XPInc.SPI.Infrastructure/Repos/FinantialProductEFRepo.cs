@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace XPInc.SPI.Infrastructure.Repos
     public class FinantialProductEFRepo : IRepo<FinantialProduct>
     {
         private readonly SPIDbContext _dbContext;
+        private readonly IMemoryCache _memoryCache;
 
-        public FinantialProductEFRepo(SPIDbContext dbContext)
+        public FinantialProductEFRepo(SPIDbContext dbContext, IMemoryCache memoryCache) 
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
         }
 
         public async Task<IEnumerable<FinantialProduct>> GetAll(int pageIndex = 1, int pageSize = 10)
@@ -30,27 +33,32 @@ namespace XPInc.SPI.Infrastructure.Repos
 
         public async Task<FinantialProduct> Get(int id)
         {
-            // Implemente a lógica para buscar um produto financeiro específico pelo ID
-            return await _dbContext.FinantialProducts.FindAsync(id);
+            var cacheKey = $"FinantialProducts_{id}";
+            if (_memoryCache.TryGetValue(cacheKey, out FinantialProduct cachedProduct))
+            {
+                return cachedProduct;
+            }
+
+            var product = await _dbContext.FinantialProducts.FindAsync(id);
+            _memoryCache.Set(cacheKey, product, TimeSpan.FromMinutes(5));
+
+            return product;
         }
 
         public async Task Add(FinantialProduct item)
         {
-            // Implemente a lógica para adicionar um novo produto financeiro ao banco de dados
             await _dbContext.FinantialProducts.AddAsync(item);
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task Edit(int id, FinantialProduct item)
         {
-            // Implemente a lógica para atualizar um produto financeiro existente no banco de dados
             var existingProduct = await _dbContext.FinantialProducts.FindAsync(id);
             if (existingProduct == null)
             {
                 throw new ArgumentException($"Produto financeiro com ID {id} não encontrado.");
             }
 
-            // Atualize as propriedades do produto existente com os valores de 'item'
             existingProduct.Name = item.Name;
             existingProduct.Description = item.Description;
             existingProduct.Type = item.Type;
@@ -62,7 +70,6 @@ namespace XPInc.SPI.Infrastructure.Repos
 
         public async Task Delete(int id)
         {
-            // Implemente a lógica para excluir um produto financeiro pelo ID
             var productToDelete = await _dbContext.FinantialProducts.FindAsync(id);
             if (productToDelete == null)
             {
