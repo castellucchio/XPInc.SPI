@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using System.Reflection;
+using XPInc.SPI.Workers.Workers;
 
 namespace XPInc.SPI.Workers.Extensions
 {
@@ -19,7 +20,12 @@ namespace XPInc.SPI.Workers.Extensions
                 .UseSqlServerStorage(builder.Configuration.GetConnectionString("SPI")));
 
             builder.Services.AddHangfireServer();
+        }
 
+        public static void ConfigureBackgroundJobs()
+        {
+            //Configurar background jobs
+            RecurringJob.AddOrUpdate<EmailNotificationBackgroundJob>("EmailNotificationBackgroundJob", x => x.Execute(), Cron.Daily);
         }
     }
 }

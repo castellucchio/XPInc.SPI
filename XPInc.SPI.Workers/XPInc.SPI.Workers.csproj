@@ -19,4 +19,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XPInc.SPI.Application\XPInc.SPI.Application.csproj" />
+  </ItemGroup>
+
 </Project>

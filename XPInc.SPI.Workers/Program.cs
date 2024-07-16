@@ -1,5 +1,6 @@
 using Hangfire;
 using XPInc.SPI.Workers.Extensions;
+using XPInc.SPI.Workers.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.RegisterServices(builder.Environment);
@@ -17,11 +18,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseHangfireDashboard();
-BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
-
 app.UseRouting();
 
 app.UseAuthorization();
+ServiceExtensions.ConfigureBackgroundJobs();
 
 app.UseEndpoints(endpoints =>
 {
