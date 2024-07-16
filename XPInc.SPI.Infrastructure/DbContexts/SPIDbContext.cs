@@ -18,19 +18,23 @@ namespace XPInc.SPI.Infrastructure.DbContexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.UseSqlServer("Server=localhost\\MSSQLSERVER02;Database=SPI;Trusted_Connection=True;TrustServerCertificate=True;");
             optionsBuilder.EnableSensitiveDataLogging();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FinantialProduct>().HasKey(p => p.Id);
             modelBuilder.Entity<Client>().HasKey(c => c.ClientId);
+            modelBuilder.Entity<FinantialProduct>().HasIndex(t => new { t.Id });
+            modelBuilder.Entity<Transaction>().HasIndex(t => new { t.ClientId, t.TransactionDate, t.Type });
             // Configuração da relação muitos-para-muitos entre Client e FinantialProduct (ações)
             modelBuilder.Entity<Transaction>()
                 .HasOne(t => t.Client)
                 .WithMany(c => c.Transactions) // Propriedade de navegação em Client para as transações
                 .HasForeignKey(t => t.ClientId);
 
-            modelBuilder.Entity<Transaction>()
+
+            modelBuilder.Entity<Transaction>()                
                 .HasOne(t => t.FinancialProduct)
                 .WithMany() // Não precisamos de uma propriedade de navegação em FinancialProduct
                 .HasForeignKey(t => t.FinantialProductId);

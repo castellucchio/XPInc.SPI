@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,11 @@ namespace XPInc.SPI.Adapters.UseCases.Products
 
         public async Task<IEnumerable<FinantialProduct>> GetFinantialProducts(int pageIndex = 1, int pageSize = 10)
         {
+            if (pageIndex <= 0)
+            {
+                throw new ValidationErrorException("A página atual da consulta deve ser >= 1");
+            }
+
             var products = await _repo.GetAll(pageIndex, pageSize);
 
             return products;

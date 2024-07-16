@@ -43,12 +43,13 @@ namespace XPInc.SPI.WebApi.Extensions
 
             // Registrar interfaces e implementações
             builder.Services.AddScoped<IValidator<FinantialProduct>, FinantialProductValidator>();
-
+            builder.Services.AddScoped<IBankStatementService, BankStatementService>();
             builder.Services.AddScoped<IFinantialProductService, FinantialProductService>();
             builder.Services.AddScoped<IInvestmentService, InvestmentService>();
             builder.Services.AddScoped<IRepo<FinantialProduct>, FinantialProductEFRepo>();
             builder.Services.AddScoped<IRepo<Client>,ClientEFRepo>();
             builder.Services.AddScoped<IClientRepo,ClientEFRepo>();
+            builder.Services.AddScoped<IBankStatementRepo,TransactionEFRepo>();
             builder.Services.AddScoped<IRepo<Transaction>,TransactionEFRepo>();
 
 
@@ -57,6 +58,7 @@ namespace XPInc.SPI.WebApi.Extensions
                 config.AddProfile<FinantialProductMappings>();
                 config.AddProfile<BuyTransactionMappings>();
                 config.AddProfile<SellTransactionMappings>();
+                config.AddProfile<BankStatementMappings>();
             });
 
             // Registrar serviços de infraestrutura (banco de dados)            

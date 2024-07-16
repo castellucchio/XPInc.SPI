@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XPInc.SPI.Entities.Enum;
 using XPInc.SPI.Entities.Models;
 using XPInc.SPI.Infrastructure.DbContexts;
 
 namespace XPInc.SPI.Infrastructure.Repos
 {
-    public class TransactionEFRepo : IRepo<Transaction>
+    public class TransactionEFRepo : IBankStatementRepo
     {
         private readonly SPIDbContext _dbContext;
         private readonly IMemoryCache _memoryCache;
@@ -51,6 +52,16 @@ namespace XPInc.SPI.Infrastructure.Repos
             pageIndex = pageIndex == 0 ? 1 : pageIndex;
             pageSize = pageSize == 0 ? 10 : pageSize;
             return await _dbContext.Transactions
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetClientBankStatement(int clientId, DateTime startDate, DateTime endDate, TransactionType type, int pageIndex = 1, int pageSize = 10)
+        {
+            return await _dbContext.Transactions
+                .Where(t => t.ClientId == clientId && t.TransactionDate >= startDate && t.TransactionDate <= endDate && t.Type == type)
+                .OrderBy(t => t.TransactionDate)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
