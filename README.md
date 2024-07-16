@@ -18,3 +18,5 @@ Para atender aos requisitos propostos, o backend disponibiliza duas WebAPIs:
 - **GET /Investment**: Permite a consulta do extrato de um determinado cliente.
 
 A documentação detalhada sobre como utilizar essas WebAPIs está disponível no Swagger, incluindo exemplos de requisições e respostas.
+
+Arquivos auxiliares se encontram na pasta "Documentação" localizada no Projeto XPInc.SPI.WebApi
